@@ -174,7 +174,7 @@ def createConfig(args, dataset):
     if len(args.input_files) > 0:
         config.JobType.inputFiles = args.input_files
 
-    config.Data.inputDBS = 'global'
+    config.Data.inputDBS = 'phys03' if '/USER' in dataset else 'global'
     config.Data.inputDataset = dataset
     config.Data.splitting = args.splitting
     config.Data.unitsPerJob = args.units_per_job
@@ -613,7 +613,7 @@ def main():
             l = l.strip()
             if not l or l.startswith('#'):
                 continue
-            dataset = [s for s in l.split() if '/MINIAOD' in s][0]
+            dataset = [s for s in l.split() if '/MINIAOD' in s or '/USER' in s][0]
             cfg, cfgpath = createConfig(args, dataset)
             if cfg.General.requestName in request_names:
                 request_names[cfg.General.requestName].append(dataset)
