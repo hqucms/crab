@@ -68,7 +68,7 @@ def formatOutputDir(outputdir):
 def parseDatasetName(dataset):
     procname, ver, tier = dataset[1:].split('/')
     ext = ''
-    isMC = tier.endswith('SIM')
+    isMC = not re.match(r'Run20[0-9][0-9][A-Z]-', ver)
     if isMC:
         ver_pieces = ver.split('_')
         keep_idx = 1
