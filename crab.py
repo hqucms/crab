@@ -76,9 +76,13 @@ def parseDatasetName(dataset):
             if s.startswith('mc'):
                 keep_idx = idx
                 break
-        rlt = re.search(r'_(v[0-9]+)(_ext[0-9]+|)(_L1v[0-9]+|)(-v[0-9]+)', ver).groups()
-        ext = rlt[1].replace('_', '-') + rlt[-1]
-        vername = '_'.join(ver_pieces[:keep_idx]) + '_' + rlt[0] + ext
+        rlt = re.search(r'_(v[0-9]+)(_ext[0-9]+|)(_L1v[0-9]+|)(-v[0-9]+)', ver)
+        if rlt:
+            rlt = rlt.groups()
+            ext = '_' + rlt[0] + rlt[1].replace('_', '-') + rlt[-1]
+        else:
+            ext = ''
+        vername = '_'.join(ver_pieces[:keep_idx]) + ext
         # hack
         if 'backup' in ver:
             ext += '_backup'
